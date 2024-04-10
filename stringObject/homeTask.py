@@ -10,15 +10,20 @@ homEwork:
 
   last iz TO calculate nuMber OF Whitespace characteRS in this Tex. caREFULL, not only Spaces, but ALL whitespaces. I got 87.
 """
+# function to correct missspelling errors in the text
+def replace_missspelling(pattern, newText, textToBeFixed):
+    text = re.sub(pattern, newText, textToBeFixed)
+    return text
+
 def normalize_text(text):
     # Capitalize the first word of each sentence
     text = ':\n'.join(list(map(lambda x: x.strip().capitalize(), text.split(':'))))
     text = '.\n'.join(list(map(lambda x: x.strip().capitalize(), text.split('.'))))
 
     # Correct 'iZ' to 'is'
-    text = re.sub(r'\biZ\b', 'is', text)
-    text = re.sub(r'\biz\b', 'is', text)
-    text = re.sub(r'\biZ\b', 'is', text)
+    text = replace_missspelling(r'\biZ\b', 'is', text)
+    text = replace_missspelling(r'\biz\b', 'is', text)
+    text = replace_missspelling(r'\biZ\b', 'is', text)
 
     # Calculate the number of whitespace characters
     whitespace_count = len(re.findall(r'\s', text))

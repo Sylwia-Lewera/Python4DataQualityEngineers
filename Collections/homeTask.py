@@ -14,6 +14,21 @@ example: {'a_1': 5, 'b': 7, 'c': 35, 'g_2': 42}
 """
 import random
 import string
+# function used to create common dictionary from list of dictionaries generated
+def create_common_dictionary(listOfDicts):
+    commonDict = {}
+
+    for dictionary_index, dictionary in enumerate(dictList):  # looping through enumerated list of dictionaries
+        for key, value in dictionary.items():  # checking existing key, value pairs
+            if key not in commonDict:
+                commonDict[key] = value  # if key appears for the first time, it is added to the common dictionary
+            else:
+                if commonDict[key] < value:  # if key has another occurrence with bigger value
+                    commonDict[key + '_' + str(
+                        dictionary_index + 1)] = value  # original key is replaced, with new one and dic number
+                    del commonDict[key]
+    return commonDict
+
 
 dictList = []  # list collection to store dictionaries created
 dictNumber = random.randint(2, 10)  # selecting number of dictionaries to create
@@ -33,15 +48,6 @@ for item in dictList:
     print(item)
 
 # Creating the common dictionary
-commonDict = {}
-
-for dictionary_index, dictionary in enumerate(dictList):  # looping through enumerated list of dictionaries
-    for key, value in dictionary.items():  # checking existing key, value pairs
-        if key not in commonDict:
-            commonDict[key] = value  # if key appears for the first time, it is added to the common dictionary
-        else:
-            if commonDict[key] < value:  # if key has another occurrence with bigger value
-                commonDict[key + '_' + str(dictionary_index + 1)] = value  # original key is replaced, with new one and dic number
-                del commonDict[key]
+commonDict = create_common_dictionary(dictList)
 
 print("Common dictionary:", commonDict)
