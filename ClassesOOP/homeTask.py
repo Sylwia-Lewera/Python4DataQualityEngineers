@@ -1,14 +1,15 @@
 import self
 from datetime import date
 from datetime import datetime
-
+from stringObject.homeTask import normalize_text
 
 class NewsFeed(object):
     def __init__(self):
         self.feedDB = []
 
     def saveToFile(self):
-        with open("output .md", "w") as file:
+        self.sortFeed()
+        with open("output .md", "a") as file:
             for item in self.feedDB:
                 file.write(f"<b>{item.title}</b><br>")
                 file.write(f"{item.text}<br>")
@@ -48,10 +49,10 @@ class PrivateAdd(object):
         self.expirationDate = expirationDate
         self.daysLeft = (expirationDate - datetime.now()).days
 
-
+"""
 testAdd = PrivateAdd('addvert', datetime(2024, 6, 4))
-sampleFeed = NewsFeed()
-sellAdd = PrivateAdd('Sprzedam Opla za 3000 PLN', datetime(2024, 12, 31))
+
+sellAdd = PrivateAdd(normalize_text('Sprzedam Opla za 3000 PLN'), datetime(2024, 12, 31))
 testNews = News('test', 'Cracow')
 testNews2 = News('test2', 'Warsaw')
 testWeather = Weather('Sunny','Cracow', datetime(2024, 8, 15))
@@ -59,6 +60,26 @@ sampleFeed.addToFeed(testAdd)
 sampleFeed.addToFeed(sellAdd)
 sampleFeed.addToFeed(testNews)
 sampleFeed.addToFeed(testNews2)
-sampleFeed.addToFeed(testWeather)
+sampleFeed.addToFeed(testWeather)"""
+
+sampleFeed = NewsFeed()
+menuLoop = True
+while menuLoop:
+    print(""""Select action you wish to perform
+    1. Add News record
+    2. Add Private Add record
+    3. Exit the program
+    """)
+    action = int(input())
+    match action:
+        case 1:
+            pass
+        case 2:
+            pass
+        case 3:
+            menuLoop = False
+            break
+
+
 sampleFeed.sortFeed()
 sampleFeed.saveToFile()
