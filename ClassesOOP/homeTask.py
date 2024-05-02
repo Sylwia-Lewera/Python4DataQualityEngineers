@@ -68,18 +68,59 @@ while menuLoop:
     print(""""Select action you wish to perform
     1. Add News record
     2. Add Private Add record
-    3. Exit the program
+    3. Save current weather condition.
+    4. Save Current Feed to the file
+    5. Exit the program
     """)
     action = int(input())
     match action:
         case 1:
-            pass
+            print("""Provide news text:
+            """)
+            newsText = str(input())
+            print("""Provide city name:
+                        """)
+            newsCity = str(input())
+            newsRecord = News(normalize_text(newsText), newsCity)
+            sampleFeed.addToFeed(newsRecord)
         case 2:
-            pass
+            print("""Provide private add text:
+                        """)
+            addText = str(input())
+            print("""Provide year of expiration date:
+                                    """)
+            expYear = int(input())
+            print("""Provide month of expiration date:
+                                                """)
+            expMonth = int(input())
+            print("""Provide day of expiration date:
+                                                """)
+            expDay = int(input())
+            addvRecord = PrivateAdd(normalize_text(addText), datetime(expYear, expMonth, expDay))
+            sampleFeed.addToFeed(addvRecord)
+
         case 3:
+            print("""Provide current weather description:
+                                    """)
+            weatherText = str(input())
+            print("""Provide city name:
+                                    """)
+            weatherCity = str(input())
+            print("""Provide current year:
+                                                """)
+            wYear = int(input())
+            print("""Providecurrent month:
+                                                            """)
+            wMonth = int(input())
+            print("""Provide current day:
+                                                            """)
+            wDay = int(input())
+            weatherRecord = Weather(weatherText, weatherCity, datetime(wYear, wMonth, wDay))
+            sampleFeed.addToFeed(weatherRecord)
+        case 4:
+            sampleFeed.saveToFile()
+        case 5:
             menuLoop = False
             break
 
 
-sampleFeed.sortFeed()
-sampleFeed.saveToFile()
