@@ -66,12 +66,12 @@ sampleFeed = NewsFeed()
 menuLoop = True
 while menuLoop:
     print(""""Select action you wish to perform
-    1. Add News record
-    2. Add Private Add record
+    1. Add News record.
+    2. Add Private Add record.
     3. Save current weather condition.
-    4. Save Current Feed to the file
-    5. Exit the program
-    """)
+    4. Save Current Feed to the file.
+    5. Provide records from text file.
+    6. Exit the program""")
     action = int(input())
     match action:
         case 1:
@@ -115,11 +115,24 @@ while menuLoop:
             print("""Provide current day:
                                                             """)
             wDay = int(input())
-            weatherRecord = Weather(weatherText, weatherCity, datetime(wYear, wMonth, wDay))
+            weatherRecord = Weather(normalize_text(weatherText), weatherCity, datetime(wYear, wMonth, wDay))
             sampleFeed.addToFeed(weatherRecord)
         case 4:
             sampleFeed.saveToFile()
         case 5:
+            try:
+                with open("feed.txt", "r") as feedFile:
+                    print(("file opened"))
+                    data = feedFile.readlines()
+                    with open("output.md", "a") as file:
+                        file.writelines(data)
+                        print('data saved to file')
+
+            except IOError:
+                print("Could not read file: 'feed.txt'")
+
+
+        case 6:
             menuLoop = False
             break
 
