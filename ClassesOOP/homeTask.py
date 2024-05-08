@@ -7,10 +7,12 @@ class NewsFeed(object):
     def __init__(self):
         self.feedDB = []
 
-    def saveToFile(self):
+    def saveToFile(self, feed=None):
+        if feed == None:
+            feed = self.feedDB
         self.sortFeed()
         with open("output .md", "a") as file:
-            for item in self.feedDB:
+            for item in feed:
                 file.write(f"<b>{item.title}</b><br>")
                 file.write(f"{item.text}<br>")
                 if item.type == 'News':
@@ -81,7 +83,7 @@ while menuLoop:
             print("""Provide city name:
                         """)
             newsCity = str(input())
-            newsRecord = News(normalize_text(newsText), newsCity)
+            newsRecord = News(normalize_text(newsText, mode="normalize only"), newsCity)
             sampleFeed.addToFeed(newsRecord)
         case 2:
             print("""Provide private add text:
@@ -96,7 +98,7 @@ while menuLoop:
             print("""Provide day of expiration date:
                                                 """)
             expDay = int(input())
-            addvRecord = PrivateAdd(normalize_text(addText), datetime(expYear, expMonth, expDay))
+            addvRecord = PrivateAdd(normalize_text(addText, mode="normalize only"), datetime(expYear, expMonth, expDay))
             sampleFeed.addToFeed(addvRecord)
 
         case 3:
@@ -115,7 +117,7 @@ while menuLoop:
             print("""Provide current day:
                                                             """)
             wDay = int(input())
-            weatherRecord = Weather(normalize_text(weatherText), weatherCity, datetime(wYear, wMonth, wDay))
+            weatherRecord = Weather(normalize_text(weatherText, mode="normalize only"), weatherCity, datetime(wYear, wMonth, wDay))
             sampleFeed.addToFeed(weatherRecord)
         case 4:
             sampleFeed.saveToFile()
@@ -123,10 +125,14 @@ while menuLoop:
             try:
                 with open("feed.txt", "r") as feedFile:
                     print(("file opened"))
-                    data = feedFile.readlines()
+                    i = 0
+                    for line in feedFile:
+                        print("line:", i + 1)
+                        i += 1
+                    """data = feedFile.readlines()
                     with open("output.md", "a") as file:
                         file.writelines(data)
-                        print('data saved to file')
+                        print('data saved to file')"""
 
             except IOError:
                 print("Could not read file: 'feed.txt'")
